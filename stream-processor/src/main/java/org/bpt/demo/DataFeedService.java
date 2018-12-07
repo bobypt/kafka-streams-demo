@@ -9,6 +9,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.UUID;
 
 @Component
 public class DataFeedService {
@@ -20,13 +21,18 @@ public class DataFeedService {
     }
 
     public void send() {
-        Random ran = new Random();
-        User user = new User("Boby", "boby@boby.com.au", ran.nextInt(100));
+
+        User user = new User("Name" + getRandomNumber(), "email"+getRandomNumber()+"@email.com.au", getRandomNumber());
         Message<User> message = MessageBuilder
                 .withPayload(user)
-                .setHeader(KafkaHeaders.MESSAGE_KEY, "Boby".getBytes())
+                .setHeader(KafkaHeaders.MESSAGE_KEY, UUID.randomUUID().toString().getBytes())
                 .build();
 
         this.userData.send(message);
+    }
+
+    private int getRandomNumber() {
+        Random ran = new Random();
+        return ran.nextInt(100);
     }
 }
