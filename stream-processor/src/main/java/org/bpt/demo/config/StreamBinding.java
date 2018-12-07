@@ -1,7 +1,6 @@
 package org.bpt.demo.config;
 
 import org.apache.kafka.streams.kstream.KStream;
-import org.bpt.demo.model.User;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
@@ -15,6 +14,6 @@ public interface StreamBinding {
     MessageChannel userDataOut();
 
     @Input(USER_DATA_IN)
-    KStream<String, User> userDataIn();
+    KStream<String, String> userDataIn();
 
 }
