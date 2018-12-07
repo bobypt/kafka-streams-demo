@@ -8,16 +8,16 @@ import org.springframework.messaging.MessageChannel;
 public interface StreamBinding {
 
     String USER_DATA_OUT = "userDataOut";
-    String USER_DATA_IN = "dataIn";
-    String USER_DATA_TEXT_OUT = "dataTextOut";
+    String DATA_IN = "dataIn";
+    String DATA_TEXT_OUT = "dataTextOut";
 
     @Output (USER_DATA_OUT)
     MessageChannel userDataOut();
 
-    @Input(USER_DATA_IN)
+    @Input(DATA_IN)
     KStream<String, String> dataIn();
 
-    @Output(USER_DATA_TEXT_OUT)
+    @Output(DATA_TEXT_OUT)
     KStream<String, String> dataTextOut();
 
 

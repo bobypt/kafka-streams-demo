@@ -16,11 +16,11 @@ import java.util.UUID;
 public class InputToTextProcessor {
 
     @StreamListener
-    @SendTo(StreamBinding.USER_DATA_TEXT_OUT)
-    public KStream<String, String> process(@Input (StreamBinding.USER_DATA_IN)KStream<String, String> userKStream) {
+    @SendTo(StreamBinding.DATA_TEXT_OUT)
+    public KStream<String, String> process(@Input (StreamBinding.DATA_IN)KStream<String, String> userKStream) {
         return userKStream
                 .map((k,v) -> {
-                    log.info("Key:" + k, ",Value:" + v);
+                    log.info("Key:" + k +  ",Value:" + v);
                     return new KeyValue<>(UUID.randomUUID().toString(), v);
                 });
 
