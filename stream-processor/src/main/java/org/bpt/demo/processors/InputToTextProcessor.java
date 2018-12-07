@@ -1,4 +1,4 @@
-package org.bpt.demo.services;
+package org.bpt.demo.processors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.streams.kstream.KStream;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class UserStreamProcessorSink {
+public class InputToTextProcessor {
 
     @StreamListener
     public void process(@Input (StreamBinding.USER_DATA_IN)KStream<String, User> userKStream) {

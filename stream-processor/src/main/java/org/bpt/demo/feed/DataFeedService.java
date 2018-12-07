@@ -1,4 +1,4 @@
-package org.bpt.demo;
+package org.bpt.demo.feed;
 
 import org.bpt.demo.config.StreamBinding;
 import org.bpt.demo.model.User;

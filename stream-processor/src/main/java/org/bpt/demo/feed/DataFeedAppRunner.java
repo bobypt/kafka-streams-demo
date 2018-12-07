@@ -1,4 +1,4 @@
-package org.bpt.demo;
+package org.bpt.demo.feed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -6,7 +6,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EventSource implements ApplicationRunner {
+public class DataFeedAppRunner implements ApplicationRunner {
 
     @Autowired
     private DataFeedService dataFeedService;

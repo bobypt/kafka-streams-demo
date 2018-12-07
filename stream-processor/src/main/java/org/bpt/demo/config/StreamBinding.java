@@ -9,7 +9,7 @@ import org.springframework.messaging.MessageChannel;
 public interface StreamBinding {
 
     String USER_DATA_OUT = "userDataOut";
-    String USER_DATA_IN = "userDataIn";
+    String USER_DATA_IN = "dataIn";
 
     @Output (USER_DATA_OUT)
     MessageChannel userDataOut();
