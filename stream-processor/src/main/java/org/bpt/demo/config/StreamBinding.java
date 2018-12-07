@@ -10,6 +10,8 @@ public interface StreamBinding {
     String USER_DATA_OUT = "userDataOut";
     String DATA_IN = "dataIn";
     String DATA_TEXT_OUT = "dataTextOut";
+    String DATA_TEXT_IN = "dataTextIn";
+    String DATA_JSON_OUT = "dataJsonOut";
 
     @Output (USER_DATA_OUT)
     MessageChannel userDataOut();
@@ -19,6 +21,12 @@ public interface StreamBinding {
 
     @Output(DATA_TEXT_OUT)
     KStream<String, String> dataTextOut();
+
+    @Input(DATA_TEXT_IN)
+    KStream<String, String> dataTextIn();
+
+    @Output(DATA_JSON_OUT)
+    KStream<String, String> dataJsonOut();
 
 
 

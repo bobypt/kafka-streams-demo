@@ -1,5 +1,6 @@
 package org.bpt.demo.feed;
 
+import org.bpt.demo.Util;
 import org.bpt.demo.config.StreamBinding;
 import org.bpt.demo.model.User;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -8,8 +9,9 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
 import java.util.UUID;
+
+import static org.bpt.demo.Util.getRandomNumber;
 
 @Component
 public class DataFeedService {
@@ -31,8 +33,5 @@ public class DataFeedService {
         this.userData.send(message);
     }
 
-    private int getRandomNumber() {
-        Random ran = new Random();
-        return ran.nextInt(100);
-    }
+
 }

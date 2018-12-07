@@ -19,6 +19,9 @@ docker-compose exec kafka1 kafka-console-consumer --bootstrap-server kafka1:2909
 
 --text-out
 docker-compose exec kafka1 kafka-console-consumer --bootstrap-server kafka1:29091 --topic data-text --from-beginning --property print.key=true
+
+--json-out
+docker-compose exec kafka1 kafka-console-consumer --bootstrap-server kafka1:29091 --topic data-json --from-beginning --property print.key=true
 ```
 
 # console producer
