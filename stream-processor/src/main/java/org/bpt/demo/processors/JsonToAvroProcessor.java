@@ -10,24 +10,22 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
-import static org.bpt.demo.Util.getRandomNumber;
 
 @Component
 @Slf4j
 public class JsonToAvroProcessor {
     @StreamListener
-//    @SendTo(StreamBinding.DATA_JSON_OUT)
-    public void process(@Input(StreamBinding.DATA_JSON_IN)KStream<String, User> streamIn) {
-        streamIn
+    @SendTo(StreamBinding.DATA_AVRO_OUT)
+    public KStream<String, org.bpt.avro.User> process(@Input(StreamBinding.DATA_JSON_IN)KStream<String, User> streamIn) {
+        return streamIn
                 .map((k,v) -> {
                     log.info("Key:" + k +  ",User name:" + v.getName());
-//                    User user = User.builder()
-//                            .name(v)
-//                            .age(getRandomNumber())
-//                            .email("email" + getRandomNumber() + "@email.com")
-//                            .build();
-//
-                    return new KeyValue<>(k, v);
+                    org.bpt.avro.User user = org.bpt.avro.User.newBuilder()
+                            .setName(v.getName())
+                            .setAge(v.getAge())
+                            .setEmail(v.getEmail())
+                            .build();
+                    return new KeyValue<>(k, user);
                 });
 
 

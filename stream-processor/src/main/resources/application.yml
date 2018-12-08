@@ -2,15 +2,22 @@
 # http://cloud.spring.io/spring-cloud-static/Finchley.SR2/multi/multi__apache_kafka_streams_binder.html
 
 spring.cloud.stream.kafka.binder.brokers: localhost:9091
-spring.cloud.stream.kafka.streams.binder.brokers: localhost:9091
-spring.cloud.stream.kafka.streams.binder.applicationId: Stream-App
 
+spring.cloud.stream.kafka.streams.binder:
+  brokers: localhost:9091
+  applicationId: Stream-App
+  configuration:
+    schema.registry.url: http://localhost:8081
+    commit.interval.ms: 1000
+    default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
 
-spring.cloud.stream.kafka.streams.binder.configuration.commit.interval.ms: 1000
-spring.cloud.stream.kafka.streams.binder.configuration.default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-spring.cloud.stream.kafka.streams.binder.configuration.default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-
-
+spring.cloud.stream:
+  schemaRegistryClient:
+    endpoint: http://localhost:8085
+  schema:
+    avro:
+      schema-locations: classpath:avro/user.avsc
 
 
 # Feed service - push dummy data to the topic ... not used in the test pipeline
@@ -46,3 +53,13 @@ spring.cloud.stream.bindings.dataJsonIn.consumer.header-mode: raw
 spring.cloud.stream.bindings.dataJsonIn.content-type: application/json
 spring.cloud.stream.kafka.streams.bindings.dataJsonIn.consumer.key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
 spring.cloud.stream.kafka.streams.bindings.dataJsonIn.consumer.value-serde: org.apache.kafka.common.serialization.Serdes$LongSerde
+
+
+# Avro out
+spring.cloud.stream.bindings.dataAvroOut.destination: data-avro
+spring.cloud.stream.bindings.dataAvroOut.consumer.header-mode: raw
+spring.cloud.stream.bindings.dataAvroOut.content-type: application/*+avro
+spring.cloud.stream.kafka.streams.bindings.dataAvroOut.producer.key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+spring.cloud.stream.kafka.streams.bindings.dataAvroOut.producer.value-serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+

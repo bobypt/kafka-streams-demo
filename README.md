@@ -24,6 +24,10 @@ docker-compose exec kafka1 kafka-console-consumer --bootstrap-server kafka1:2909
 docker-compose exec kafka1 kafka-console-consumer --bootstrap-server kafka1:29091 --topic data-json --from-beginning --property print.key=true
 ```
 
+--avro-out
+docker-compose exec schemaregistry kafka-avro-console-consumer --bootstrap-server kafka1:29091 --topic data-avro --from-beginning --property print.key=true
+```
+
 # console producer
 ```
 docker-compose exec kafka1 kafka-console-producer --broker-list kafka1:29091 --topic data-in

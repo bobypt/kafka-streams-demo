@@ -14,6 +14,7 @@ public interface StreamBinding {
     String DATA_TEXT_IN = "dataTextIn";
     String DATA_JSON_OUT = "dataJsonOut";
     String DATA_JSON_IN = "dataJsonIn";
+    String DATA_AVRO_OUT = "dataAvroOut";
 
     @Output (USER_DATA_OUT)
     MessageChannel userDataOut();
@@ -32,5 +33,8 @@ public interface StreamBinding {
 
     @Input(DATA_JSON_IN)
     KStream<String, User> dataJsonIn();
+
+    @Output(DATA_AVRO_OUT)
+    KStream<String, org.bpt.avro.User> dataAvroOut();
 
 }
