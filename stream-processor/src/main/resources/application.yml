@@ -15,9 +15,9 @@ spring.cloud.stream.kafka.streams.binder:
 spring.cloud.stream:
   schemaRegistryClient:
     endpoint: http://localhost:8085
-  schema:
-    avro:
-      schema-locations: classpath:avro/user.avsc
+#  schema:
+#    avro:
+#      schema-locations: classpath:avro/user.avsc
 
 
 # Feed service - push dummy data to the topic ... not used in the test pipeline

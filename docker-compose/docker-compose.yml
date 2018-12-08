@@ -124,7 +124,7 @@ services:
       CONTROL_CENTER_CONNECT_CLUSTER: "https://connect:8083"
       CONTROL_CENTER_KSQL_URL: "http://ksql-server:8088"
       CONTROL_CENTER_KSQL_ADVERTISED_URL: "http://localhost:8088"
-      CONTROL_CENTER_SCHEMA_REGISTRY_URL: "https://schema-registry:8085"
+      CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8085"
       CONTROL_CENTER_STREAMS_CONSUMER_REQUEST_TIMEOUT_MS: "960032"
       CONTROL_CENTER_STREAMS_SECURITY_PROTOCOL: PLAINTEXT
       # HTTP and HTTPS to Control Center UI 
@@ -133,6 +133,7 @@ services:
   schemaregistry:
     image: confluentinc/cp-schema-registry:5.0.0
     container_name: schema-registry
+    hostname: kafka-client
     restart: always
     depends_on:
       - zookeeper
