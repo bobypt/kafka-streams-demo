@@ -63,3 +63,15 @@ spring.cloud.stream.kafka.streams.bindings.dataAvroOut.producer.key-serde: org.a
 spring.cloud.stream.kafka.streams.bindings.dataAvroOut.producer.value-serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
 
 
+# Avro data in
+spring.cloud.stream.bindings.dataAvroIn.destination: data-avro
+spring.cloud.stream.bindings.dataAvroIn.group: data-avro-in-group
+spring.cloud.stream.bindings.dataAvroIn.consumer.header-mode: raw
+spring.cloud.stream.bindings.dataAvroIn.content-type: application/*+avro
+spring.cloud.stream.kafka.streams.bindings.dataAvroIn.consumer.key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+spring.cloud.stream.kafka.streams.bindings.dataAvroIn.consumer.value-serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+
+# text data out
+spring.cloud.stream.bindings.dataTextSinkOut.destination: data-text-sink
+spring.cloud.stream.bindings.dataTextSinkOut.consumer.header-mode: raw
