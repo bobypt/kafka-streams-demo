@@ -21,7 +21,6 @@ public class DemoApplication {
 
 	@StreamListener("input")
 	public void input(CUSTOMER CUSTOMER) {
-		System.out.print(CUSTOMER.toString());
 		userRepository.save(CUSTOMER);
 	}
 
