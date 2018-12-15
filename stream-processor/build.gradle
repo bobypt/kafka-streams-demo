@@ -38,7 +38,6 @@ dependencies {
 	implementation('org.springframework.cloud:spring-cloud-stream-binder-kafka')
 	implementation('org.springframework.kafka:spring-kafka')
 	implementation('org.springframework.cloud:spring-cloud-stream-binder-kafka-streams')
-	implementation('org.springframework.cloud:spring-cloud-stream-binder-kafka')
 
 	implementation('org.springframework.cloud:spring-cloud-stream-schema')
 
@@ -51,12 +50,14 @@ dependencies {
 	compile 'org.apache.kafka:kafka-clients:1.1.1'
 	compile 'org.apache.kafka:kafka-streams:1.1.1'
 
-
+	testCompile 'org.apache.kafka:kafka-clients:1.1.1:test'
+	testCompile 'org.apache.kafka:kafka_2.11:1.1.1'
+	testCompile 'org.apache.kafka:kafka_2.11:1.1.1:test'
 
 	compileOnly('org.projectlombok:lombok')
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	testImplementation('org.springframework.cloud:spring-cloud-stream-test-support')
+//	testImplementation('org.springframework.cloud:spring-cloud-stream-test-support')
 	testImplementation('org.springframework.kafka:spring-kafka-test')
 }
 

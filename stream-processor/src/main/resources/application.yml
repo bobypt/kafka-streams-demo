@@ -28,6 +28,7 @@ spring.cloud.stream.bindings.userDataOut.producer.header-mode: raw
 spring.cloud.stream.bindings.dataIn.destination: data-in
 spring.cloud.stream.bindings.dataIn.group: data-in-group
 spring.cloud.stream.bindings.dataIn.consumer.header-mode: raw
+spring.cloud.stream.bindings.dataIn.consumer.startOffset: earliest
 
 
 # text data out
