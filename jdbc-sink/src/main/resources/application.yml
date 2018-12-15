@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+spring.jpa.database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+spring.jpa.show-sql: true
+spring.jpa.hibernate.ddl-auto: create
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults: false
+
+
+spring.cloud.stream.kafka.streams.binder:
+  brokers: localhost:9092
+  applicationId: Jdbc-sink-app
+  configuration:
+    commit.interval.ms: 1000
+    default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+
+spring.cloud.stream.bindings.input.destination: data-in
+spring.cloud.stream.bindings.input.consumer.header-mode: raw
+spring.cloud.stream.bindings.input.content-type: application/json
+#spring.cloud.stream.kafka.streams.bindings.input.consumer.valueSerde: org.springframework.kafka.support.serializer.JsonSerde
+#spring.cloud.stream.bindings.input.nativeDecoding: true
+
+spring.flyway:
+  locations: classpath:db/migration
+  baselineOnMigrate: true
