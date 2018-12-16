@@ -22,6 +22,7 @@ spring.cloud.stream.kafka.streams.binder:
 spring.cloud.stream.bindings.input.destination: data-in
 spring.cloud.stream.bindings.input.consumer.header-mode: raw
 spring.cloud.stream.bindings.input.content-type: application/json
+spring.cloud.stream.kafka.bindings.input.consumer.startOffset: earliest
 #spring.cloud.stream.kafka.streams.bindings.input.consumer.valueSerde: org.springframework.kafka.support.serializer.JsonSerde
 #spring.cloud.stream.bindings.input.nativeDecoding: true
 

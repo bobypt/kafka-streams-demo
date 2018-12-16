@@ -7,8 +7,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "CUSTOMER")
-public class CUSTOMER {
+@Table(name = "Customer")
+public class Customer {
 
     @Id
     @GeneratedValue
