@@ -25,12 +25,27 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
+          <stringProp name="maximumValue">10000000</stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <boolProp name="perThread">false</boolProp>
+          <stringProp name="randomSeed">abc</stringProp>
+          <stringProp name="variableName">KAFKA_MESSAGE_KEY</stringProp>
+        </RandomVariableConfig>
+        <hashTree/>
+        <com.gslab.pepper.config.plaintext.PlainTextConfigElement guiclass="TestBeanGUI" testclass="com.gslab.pepper.config.plaintext.PlainTextConfigElement" testname="Pepper-Box PlainText Config" enabled="true">
+          <stringProp name="jsonSchema">{&quot;name&quot;:&quot;{{FIRST_NAME()}}&quot;,&quot;address&quot;:&quot;{{RANDOM_INT_RANGE(1, 999)}} some street&quot;, &quot;ROWTIME&quot;:{{TIMESTAMP()}}, &quot;ROWKEY&quot;: &quot;{{UUID()}}&quot;}
+</stringProp>
+          <stringProp name="placeHolder">MESSAGE</stringProp>
+        </com.gslab.pepper.config.plaintext.PlainTextConfigElement>
+        <hashTree/>
         <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="Kafak-Message-sampler" enabled="true">
           <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments">
               <elementProp name="bootstrap.servers" elementType="Argument">
                 <stringProp name="Argument.name">bootstrap.servers</stringProp>
-                <stringProp name="Argument.value">localhost:9092</stringProp>
+                <stringProp name="Argument.value">kafka:9092</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="zookeeper.servers" elementType="Argument">
@@ -100,7 +115,7 @@
               </elementProp>
               <elementProp name="message.key.placeholder" elementType="Argument">
                 <stringProp name="Argument.name">message.key.placeholder</stringProp>
-                <stringProp name="Argument.value">KEY</stringProp>
+                <stringProp name="Argument.value">KAFKA_MESSAGE_KEY</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="message.value.placeholder" elementType="Argument">
@@ -167,11 +182,6 @@
           </elementProp>
           <stringProp name="classname">com.gslab.pepper.sampler.PepperBoxKafkaSampler</stringProp>
         </JavaSampler>
-        <hashTree/>
-        <com.gslab.pepper.config.plaintext.PlainTextConfigElement guiclass="TestBeanGUI" testclass="com.gslab.pepper.config.plaintext.PlainTextConfigElement" testname="Pepper-Box PlainText Config" enabled="true">
-          <stringProp name="jsonSchema">{&quot;name&quot;:&quot;{{FIRST_NAME()}}&quot;,&quot;address&quot;:&quot;{{RANDOM_INT_RANGE(1, 999)}} some street&quot;}</stringProp>
-          <stringProp name="placeHolder">MESSAGE</stringProp>
-        </com.gslab.pepper.config.plaintext.PlainTextConfigElement>
         <hashTree/>
         <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
