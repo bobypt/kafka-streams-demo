@@ -1,0 +1,118 @@
+{
+	"info": {
+		"name": "Kafka-connect",
+		"_postman_id": "aa2e6088-ff1c-a20e-43a5-ea2f86db72fd",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Connectors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8083/connectors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create elastic search sink connector",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"es-sink-connector\",\n  \"config\": {\n    \"connector.class\": \"io.confluent.connect.elasticsearch.ElasticsearchSinkConnector\",\n    \"connection.url\": \"http://elasticsearch:9200\",\n    \"type.name\": \"kafka-connect\",\n    \"topics\": \"transactions\",\n    \"topic.index.map\": \"transactions:transactions_index\",    \n    \"key.ignore\": \"true\",\n    \"schema.ignore\": \"true\",\n    \"value.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\n    \"value.converter.schemas.enable\": \"false\",\n\t\"key.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\n\t\"key.converter.schemas.enable\": \"false\"    \n  }\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "map_date",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"properties\": {\n        \"timestamp\": {\n          \"type\":   \"date\",\n          \"format\": \"epoch_millis\"\n        }\n      }\n    }\n"
+				},
+				"url": {
+					"raw": "localhost:9200/transactions_index/_mapping/kafka-connect",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"transactions_index",
+						"_mapping",
+						"kafka-connect"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create index",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"mappings\": {\n    \"kafka-connect\": {\n      \"properties\": {\n        \"timestamp\": {\n          \"type\":   \"date\",\n          \"format\": \"epoch_millis\"\n        }\n      }\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "localhost:9200/transactions_index",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"transactions_index"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

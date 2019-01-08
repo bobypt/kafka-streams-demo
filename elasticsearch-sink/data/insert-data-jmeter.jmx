@@ -16,7 +16,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">5</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -25,9 +25,27 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <PreciseThroughputTimer guiclass="TestBeanGUI" testclass="PreciseThroughputTimer" testname="Precise Throughput Timer" enabled="true">
+          <doubleProp>
+            <name>allowedThroughputSurplus</name>
+            <value>1.0</value>
+            <savedValue>0.0</savedValue>
+          </doubleProp>
+          <intProp name="batchSize">1</intProp>
+          <intProp name="batchThreadDelay">0</intProp>
+          <longProp name="duration">60</longProp>
+          <intProp name="exactLimit">10000</intProp>
+          <longProp name="randomSeed">0</longProp>
+          <doubleProp>
+            <name>throughput</name>
+            <value>100000.0</value>
+            <savedValue>0.0</savedValue>
+          </doubleProp>
+          <intProp name="throughputPeriod">60</intProp>
+        </PreciseThroughputTimer>
+        <hashTree/>
         <com.gslab.pepper.config.plaintext.PlainTextConfigElement guiclass="TestBeanGUI" testclass="com.gslab.pepper.config.plaintext.PlainTextConfigElement" testname="Pepper-Box PlainText Config" enabled="true">
-          <stringProp name="jsonSchema">{&quot;name&quot;:&quot;{{FIRST_NAME()}}&quot;,&quot;address&quot;:&quot;{{RANDOM_INT_RANGE(1, 999)}} some street&quot;}
-</stringProp>
+          <stringProp name="jsonSchema">{&quot;timestamp&quot;: &quot;{{TIMESTAMP(&quot;01-01-2019 10:30:12&quot;,&quot;01-02-2019 12:12:12&quot;)}}&quot;,&quot;from&quot;:{&quot;bsb&quot;: &quot;{{RANDOM_INT_RANGE(100000, 999999)}}&quot;,&quot;accountNumber&quot;: &quot;{{RANDOM_INT_RANGE(100000000, 999999999)}}&quot;},&quot;to&quot;: {&quot;bsb&quot;: &quot;{{RANDOM_INT_RANGE(100000, 999999)}}&quot;,&quot;accountNumber&quot;: &quot;{{RANDOM_INT_RANGE(100000000, 999999999)}}&quot;},&quot;amount&quot;: &quot;{{RANDOM_INT_RANGE(0,999)}}.{{RANDOM_INT_RANGE(10,99)}}&quot;,&quot;currency&quot;: &quot;AUD&quot;}</stringProp>
           <stringProp name="placeHolder">MESSAGE</stringProp>
         </com.gslab.pepper.config.plaintext.PlainTextConfigElement>
         <hashTree/>
@@ -46,7 +64,7 @@
               </elementProp>
               <elementProp name="kafka.topic.name" elementType="Argument">
                 <stringProp name="Argument.name">kafka.topic.name</stringProp>
-                <stringProp name="Argument.value">data-in</stringProp>
+                <stringProp name="Argument.value">transactions</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="key.serializer" elementType="Argument">
