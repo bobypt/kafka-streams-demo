@@ -1,13 +1,28 @@
-# start by running init script
-```
-./init.sh
-```
+#!/bin/bash
 
-# start step by step
- - docker-compose up -d
- - create an index in elastic search by running curl below / postman create index.
+docker-compose up -d
+#try 50 times with 2s delay
+HEALTH_MAX_ATTEMPT=50
 
- ```
+# parameter 1 - health url
+function waitForHealthy {
+echo "Checking server status => " $1
+local var attempt_counter=0
+while ! $(curl --output /dev/null --silent --fail $1); do 
+    if [ ${attempt_counter} -eq ${HEALTH_MAX_ATTEMPT} ];then
+      echo "Max attempts reached"
+      exit 1
+    fi 
+    sleep 2
+    echo -n "."
+    attempt_counter=$(($attempt_counter+1))
+done
+}
+
+echo "Checking elastic search server status"
+waitForHealthy "http://localhost:9200/"
+echo "Elastic search server healthy. Create index."
+
 curl -X PUT \
   http://localhost:9200/transactions_index \
   -H 'cache-control: no-cache' \
@@ -28,12 +43,14 @@ curl -X PUT \
     }
   }
 }'
-```
 
- - Create kafka connect to move messages from kafka topic to elasic search
+echo "Elastic search index created"
 
- ```
- curl -X POST \
+echo "Checking kafka-connect server status"
+waitForHealthy "http://localhost:8083/"
+echo "Kafka-connect server healthy. Create connect sink."
+
+curl -X POST \
   http://localhost:8083/connectors \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
@@ -54,42 +71,5 @@ curl -X PUT \
 	"key.converter.schemas.enable": "false"    
   }	
 }'
-```
 
- - push messages to kafka topic by running jmeter file under /data/. 
-
-
-# console consumer
-```
-docker-compose exec kafka kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic transactions --from-beginning --property print.key=true
-
-```
-
-# Connect to ksql client 
-```
-docker-compose exec ksql-cli ksql http://ksql-server:8088
-
-show topics;
-
-print 'data-in';
-
-show streams;
-
-CREATE STREAM users_stream (name varchar, address varchar) WITH(kafka_topic='data-in', value_format='JSON');
-
-DROP STREAM USERS_STREAM;
-
-select * from USERS_STREAM LIMIT 3;
-```
-#Elastic search
-
-```
-curl -s "http://localhost:9200/" | jq
-
-```
-
-# Kibana url
-
-```
-http://localhost:5601/
-```
+echo "COMPLETE.."
