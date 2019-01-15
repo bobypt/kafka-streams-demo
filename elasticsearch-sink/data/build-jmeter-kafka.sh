@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 TEMP_DIR=temp_jmeter_pepperbox
 mkdir $TEMP_DIR
@@ -18,6 +18,4 @@ cp $TEMP_DIR/pepper-box/target/pepper-box-1.0.jar .
 echo "Cleanup"
 rm -rf $TEMP_DIR
 
-
 docker build -t jmeter-kafka .
-docker run --network host jmeter-kafka:latest
