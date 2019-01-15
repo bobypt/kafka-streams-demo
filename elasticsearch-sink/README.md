@@ -3,69 +3,30 @@
 ./init.sh
 ```
 
-# start step by step
- - docker-compose up -d
- - create an index in elastic search by running curl below / postman create index.
-
- ```
-curl -X PUT \
-  http://localhost:9200/transactions_index \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -H 'postman-token: 6ffcc009-acab-169d-f841-30d0059b1024' \
-  -d '{
-  "mappings": {
-    "kafka-connect": {
-      "properties": {
-        "timestamp": {
-          "type":   "date",
-          "format": "epoch_millis"
-        },
-        "amount": {
-        	"type":   "double"
-        }
-      }
-    }
-  }
-}'
+# build jmeter kafka image
+```
+cd data
+./build-jmeter-kafka.sh
 ```
 
- - Create kafka connect to move messages from kafka topic to elasic search
-
- ```
- curl -X POST \
-  http://localhost:8083/connectors \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -H 'postman-token: 8ea4d2a0-86e5-502c-2bfc-3de7e38a9e83' \
-  -d '{
-	"name": "es-sink-connector",
-  "config": {
-    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
-    "connection.url": "http://elasticsearch:9200",
-    "type.name": "kafka-connect",
-    "topics": "transactions",
-    "topic.index.map": "transactions:transactions_index",    
-    "key.ignore": "true",
-    "schema.ignore": "true",
-    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "value.converter.schemas.enable": "false",
-	"key.converter": "org.apache.kafka.connect.json.JsonConverter",
-	"key.converter.schemas.enable": "false"    
-  }	
-}'
+# Insert random 100k data
+```
+docker run --network host jmeter-kafka:latest
 ```
 
- - push messages to kafka topic by running jmeter file under /data/. 
+# cleanup
+```
+./destroy.sh
+```
 
-
-# console consumer
+# Misc notes
+## console consumer
 ```
 docker-compose exec kafka kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic transactions --from-beginning --property print.key=true
 
 ```
 
-# Connect to ksql client 
+## Connect to ksql client 
 ```
 docker-compose exec ksql-cli ksql http://ksql-server:8088
 
@@ -81,14 +42,14 @@ DROP STREAM USERS_STREAM;
 
 select * from USERS_STREAM LIMIT 3;
 ```
-#Elastic search
+## Elastic search
 
 ```
 curl -s "http://localhost:9200/" | jq
 
 ```
 
-# Kibana url
+## Kibana url
 
 ```
 http://localhost:5601/
